@@ -104,4 +104,6 @@ class YPareo:
         for i in planning_json["semaines"][0]["ressources"][0]["seances"]:
             if int(i["numJour"]) == int(day_number):
                 tomorrow_courses.append(i)
+        if not tomorrow_courses:
+            return None
         return tomorrow_courses

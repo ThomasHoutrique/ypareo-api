@@ -24,25 +24,26 @@ webhook = {
     "embeds": [],
     "attachments": [],
 }
+courses = net.get_tomorrow_courses()
+if courses:
+    for course in courses:
+        course_start_at = timedelta(minutes=int(course["minuteDebut"]))
+        course_end_at = course_start_at + timedelta(minutes=int(course["duree"]))
+        course = {
+            "title": course["libelle"],
+            "color": 5814783,
+            "fields": [
+                {
+                    "name": "Horraires",
+                    "value": str(course_start_at) + " - " + str(course_end_at),
+                },
+                # list of details as string separated by \n
+                {"name": "Détails", "value": "\n ".join(course["detail"])},
+            ],
+        }
+        webhook["embeds"].append(course)
 
-for course in net.get_tomorrow_courses():
-    course_start_at = timedelta(minutes=int(course["minuteDebut"]))
-    course_end_at = course_start_at + timedelta(minutes=int(course["duree"]))
-    course = {
-        "title": course["libelle"],
-        "color": 5814783,
-        "fields": [
-            {
-                "name": "Horraires",
-                "value": str(course_start_at) + " - " + str(course_end_at),
-            },
-            # list of details as string separated by \n
-            {"name": "Détails", "value": "\n ".join(course["detail"])},
-        ],
-    }
-    webhook["embeds"].append(course)
-
-r = httpx.post(
-    getenv("YPAREO_WEBHOOK"),
-    json=webhook,
-)
+    r = httpx.post(
+        getenv("YPAREO_WEBHOOK"),
+        json=webhook,
+    )
