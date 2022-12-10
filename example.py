@@ -13,7 +13,7 @@ from ypareo_api import YPareo
 username = getenv("YPAREO_USER")
 password = getenv("YPAREO_PASS")
 domain = getenv("YPAREO_DOMAIN")
-webhook = getenv("YPAREO_WEBHOOK")
+webhook = getenv("DISCORD_WEBHOOK")
 net = YPareo(username=username, password=password, domain=domain)
 
 # Date as day/month/year
