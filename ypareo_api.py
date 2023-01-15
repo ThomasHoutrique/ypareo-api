@@ -76,7 +76,10 @@ class YPareo:
         """
         current_year = datetime.now().year
         if week:
-            url = f"{self.domain}/index.php/apprenant/planning/courant/?semaineDebut={str(current_year) + str(week + 1)}&modeAffichage=0"
+            week = week + 1
+            if week < 10:
+                week = f"0{week}"
+            url = f"{self.domain}/index.php/apprenant/planning/courant/?semaineDebut={str(current_year) + week}&modeAffichage=0"
         else:
             url = f"{self.domain}/index.php/apprenant/planning/courant/"
         planning_req = self.session.get(url)
