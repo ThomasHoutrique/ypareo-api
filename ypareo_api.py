@@ -35,7 +35,9 @@ class YPareo:
         """
         csrf_req = self.session.get(f"{self.domain}/index.php/login/")
         if csrf_req.status_code != 200:
-            raise Exception("Failed to get CSRF token, error :" + csrf_req.status_code)
+            raise Exception(
+                "Failed to get CSRF token, error :" + str(csrf_req.status_code)
+            )
         soup = BeautifulSoup(csrf_req.text, "html.parser")
         csrf = soup.find("input", {"name": "token_csrf"})["value"]
         return csrf
@@ -53,13 +55,15 @@ class YPareo:
             data=self.data,
         )
         if login_req.status_code != 303:
-            raise Exception("Failed to login, error :" + login_req.status_code)
+            raise Exception("Failed to login, error :" + str(login_req.status_code))
 
         int_num = login_req.headers.get("Set-Cookie").split(";")[0].split("=")[1]
         self.session.cookies.set("IntNum", int_num)
         home_req = self.session.get(f"{self.domain}/index.php/apprenant/accueil")
         if home_req.status_code != 200:
-            raise Exception("Failed to get home page, error :" + home_req.status_code)
+            raise Exception(
+                "Failed to get home page, error :" + str(home_req.status_code)
+            )
 
     def get_week_planning(self, week: int = None):
         """
@@ -78,7 +82,7 @@ class YPareo:
         planning_req = self.session.get(url)
         if planning_req.status_code != 200:
             raise Exception(
-                "Failed to get planning, error :" + planning_req.status_code
+                "Failed to get planning, error :" + str(planning_req.status_code)
             )
         return json.loads(
             planning_req.text.split("var planningJSON        = ")[1].split("]};")[0]
