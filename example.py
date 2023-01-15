@@ -13,7 +13,7 @@ from ypareo_api import YPareo
 username = getenv("YPAREO_USER")
 password = getenv("YPAREO_PASS")
 domain = getenv("YPAREO_DOMAIN")
-webhook = getenv("DISCORD_WEBHOOK")
+webhook_url = getenv("DISCORD_WEBHOOK")
 net = YPareo(username=username, password=password, domain=domain)
 
 # Date as day/month/year
@@ -44,6 +44,6 @@ if courses:
         webhook["embeds"].append(course)
 
     r = httpx.post(
-        getenv("YPAREO_WEBHOOK"),
+        webhook_url,
         json=webhook,
     )
