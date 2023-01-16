@@ -29,6 +29,10 @@ if courses:
     for course in courses:
         course_start_at = timedelta(minutes=int(course["minuteDebut"]))
         course_end_at = course_start_at + timedelta(minutes=int(course["duree"]))
+        course_start_at = str(course_start_at).split(":")
+        course_end_at = str(course_end_at).split(":")
+        course_start_at = course_start_at[0] + "h" + course_start_at[1]
+        course_end_at = course_end_at[0] + "h" + course_end_at[1]
         course = {
             "title": course["libelle"],
             "color": 5814783,
@@ -43,7 +47,8 @@ if courses:
         }
         webhook["embeds"].append(course)
 
-    r = httpx.post(
-        webhook_url,
-        json=webhook,
-    )
+    print(webhook)
+    # r = httpx.post(
+    #     webhook_url,
+    #     json=webhook,
+    # )
