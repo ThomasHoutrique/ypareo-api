@@ -48,7 +48,7 @@ if courses:
         webhook["embeds"].append(course)
 
     print(webhook)
-    # r = httpx.post(
-    #     webhook_url,
-    #     json=webhook,
-    # )
+    r = httpx.post(
+        webhook_url,
+        json=webhook,
+    )
